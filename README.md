@@ -8,35 +8,44 @@ This would serve as a good way to
 
 List of functors
 ----------------
-* direct image
-* inverse image (various incarnations, get terminology straight)
-* higher direct images
-* sections with support [Har, Ex. II.1.20]
-* direct image with compact support
-* ...
+
+* direct image
+* inverse image (various incarnations, get terminology straight)
+* higher direct images
+* sections with support [Har, Ex. II.1.20]
+* direct image with compact support
+* ...
+
 
 Properties to describe
 ----------------------
-* exactness
-* adjointness
-* natural interpretations (which categories etc.)
-* preservation of (quasi-)coherent sheaves, locally free sheaves, ...
-* ...
+
+* exactness
+* adjointness
+* natural interpreations (which categories etc.)
+* preservation of (quasi-)coherent sheaves, locally free sheaves, ...
+* ...
 
 Format
 ------
-* HTML
-  - good styling
-  - dynamic view (think toggles: see Remarks)
+
+* HTML
+
+  - good styling
+  - dynamic view (think toggles: see Remarks)
   - ...
-* TeX
-  - both a A4 printable and poster version
-  - ...
+
+* TeX
+
+  - both a A4 printable and poster version
+  - ...
+
 * having both would require some metaformat I'm afraid, or some Python magic to process things
 
 Remarks
 -------
-* refer to Stacks project and EGA wherever possible, also Hartshorne, Liu (but make the visibility of these, or all references, optional?)
+
+* refer to Stacks project and EGA wherever possible, also Hartshorne, Liu (but make the visibility of these, or all references, optional?)
 * also provide counterexamples where applicable (again refer to Stacks project, possibly adding them?)
-* find a good location for this (GitHub hosting might serve as an option?)
-* find people to work together on this (Mauro has agreed, maybe more?)
+* find a good location for this (GitHub hosting might serve as an option?)
+* find people to work together on this (Mauro has agreed, maybe more?)
