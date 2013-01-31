@@ -1,0 +1,131 @@
+\documentclass[a4paper,10pt]{article}
+% these come first to prevent clashes
+\usepackage{hyperref}
+\usepackage{cleveref}
+\hypersetup{hypertexnames = false, bookmarksdepth = 1, bookmarksopen = true, colorlinks, linkcolor = black, citecolor = black, urlcolor = black, pdfstartview={XYZ null null 1}}
+
+\usepackage[fleqn, leqno]{amsmath}
+\usepackage{amsthm}
+\usepackage[style = alphabetic, backend = biber, abbreviate = false, dateabbrev = long, alldates = long]{biblatex}
+\usepackage{fixltx2e}
+\usepackage{mathtools}
+\usepackage{thmtools}
+\usepackage[colorinlistoftodos, textsize = small]{todonotes}
+\usepackage{xcolor}
+\usepackage{xparse}
+
+% fonts
+\usepackage[T1]{fontenc}
+\usepackage[charter]{mathdesign}
+\usepackage[scaled]{beramono,berasans}
+\usepackage{epstopdf}
+\usepackage{microtype}
+\frenchspacing
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+
+\DeclareDocumentCommand\addreference{g}{\todo[color=blue!50]{Add reference\IfNoValueF{#1}{: #1}}}
+\DeclareDocumentCommand\checkthis{g}{\todo[color=red!50]{Check this\IfNoValueF{#1}{: #1}}}
+\DeclareDocumentCommand\fixthis{g}{\todo[color=orange!50]{Fix this\IfNoValueF{#1}{: #1}}}
+\DeclareDocumentCommand\expandthis{g}{\todo[color=green!50]{Expand\IfNoValueF{#1}{: #1}}}
+
+\newcommand\dash{\nobreakdash-\hspace{0pt}}
+\mathchardef\mhyphen="2D
+
+% categories
+\newcommand\Coh{\ensuremath{\mathrm{Coh}}}
+\DeclareDocumentCommand\Mod{g}{\ensuremath{\IfNoValueF{#1}{#1\mhyphen}\textrm{Mod}}}
+\newcommand\Qcoh{\ensuremath{\mathrm{Qcoh}}}
+\newcommand\Sh{\ensuremath{\mathrm{Sh}}}
+
+% operators
+\DeclareMathOperator\Ob{Ob}
+
+\addbibresource{bibliography.bib}
+
+\title{An overview of common functors in algebraic geometry}
+\author{Pieter Belmans \and Mauro Porta}
+
+\begin{document}
+\maketitle
+
+\listoftodos
+
+\section{Introduction}
+In algebraic geometry we often associate certain categories to an object. Most of the times these are categories of sheaves on a scheme, or more generally a ringed space or even topological space. A list of candidates we consider is given in \cref{section:categories}.
+
+Given these associated categories we would like to study their relations under a functor induced by a morphism~$f\colon X\to Y$. The main questions are:
+\begin{enumerate}
+  \item How can we create meaningful functors between these categories? This is addressed in \cref{section:functors}.
+  \item What categorical properties do these functors have? By categorical properties we understand adjointness, preservation of (co)limits, etc. This is addressed in \cref{section:categorical-properties}.
+  \item What ``geometric properties'' do these functors have? By geometric properties we understand mostly properties that are dependent on geometric conditions, and imply certain preservations. This is addressed in \cref{section:geometric-properties}.
+\end{enumerate}
+Whenever something is \emph{not} true in an interesting way (for our interpretation of interesting), we will provide a counterexample in \cref{section:counterexamples}.
+
+Throughout this text we will refer to \cite{stacks} or any of the relevant EGA's whenever possible\addreference{no references are given at this moment, look up the definitions}.
+
+\section{Categories of sheaves}
+\label{section:categories}
+We will consider the following categories:
+\begin{enumerate}
+  \item The category of sheaves of abelian groups on a topological space~$X$, denoted~$\Sh_X$.
+  \item The category of~$\mathcal{O}_X$\dash modules on a ringed space~$X$, denoted~$\Mod{\mathcal{O}_X}$.
+  \item \expandthis{derived categories}
+\end{enumerate}
+In \cref{section:geometric-properties} we will discuss preservation of specific subcategories. These will be:
+\begin{enumerate}
+  \item The category of coherent sheaves on a ringed space~$X$, denoted~$\Coh_X$\checkthis{or just on schemes?}.
+  \item The category of quasicoherent sheaves on a ringed space~$X$, denoted~$\Qcoh_X$\checkthis{or just on schemes?}.
+  \item \expandthis{derived versions}
+\end{enumerate}
+
+\section{Functors}
+\label{section:functors}
+\begin{definition}
+  Let~$f\colon X\to Y$ be a morphism of topological spaces. The \emph{direct image functor}~$f_*\colon\Sh_X\to\Sh_Y$ is defined by sending~$\mathcal{F}\in\Ob(\Sh_X)$ to the presheaf on~$Y$ defined by
+  \begin{equation}
+    f_*\mathcal{F}\colon U\mapsto\mathcal{F}(f^{-1}(U))
+    \label{equation:direct-image-abelian-groups}
+  \end{equation}
+  for~$U\subseteq Y$ open. This presheaf is already a sheaf.
+\end{definition}
+
+\begin{definition}
+  Let~$f\colon X\to Y$ be a morphism of topological spaces. The \emph{inverse image functor}~$f^{-1}\colon\Sh_Y\to\Sh_X$ is defined by sending~$\mathcal{F}\in\Ob(\Sh_Y)$ to the sheafification of the presheaf defined by
+  \begin{equation}
+    f^{-1}\colon U\mapsto\varinjlim_{V\supseteq f(U)}\mathcal{F}(V)
+    \label{equation:inverse-image-abelian-groups}
+  \end{equation}
+  for~$U\subseteq X$ open.
+\end{definition}
+
+\begin{definition}
+  Let~$f\colon X\to Y$ be a morphism of ringed spaces. The \emph{direct image functor}~$f_*\colon\Mod{\mathcal{O}_X}\to\Mod{\mathcal{O}_Y}$ is defined by sending~$\mathcal{F}\in\Ob(\Mod{\mathcal{O}_X})$ to the presheaf defined on~$Y$ by
+  \begin{equation}
+    f_*\mathcal{F}\colon U\mapsto\mathcal{F}(f^{-1}(U))
+    \label{equation:direct-image-O_X-modules}
+  \end{equation}
+  for~$U\subseteq Y$ open. This presheaf is already a sheaf.
+\end{definition}
+
+\begin{definition}
+  Let~$f\colon X\to Y$ be a morphism of ringed spaces. The \emph{inverse image functor}~$f^*\colon\Mod{\mathcal{O}_Y}\to\Mod{\mathcal{O}_X}$ is defined by sending~$\mathcal{F}\in\Ob(\Mod{\mathcal{O}_Y})$ to the sheaf defined as
+  \begin{equation}
+    f^*\mathcal{F}\coloneqq f^{-1}\mathcal{F}\otimes_{f^{-1}\mathcal{O}_Y}\mathcal{O}_X.
+    \label{equation:inverse-image-O_X-modules}
+  \end{equation}
+\end{definition}
+
+\section{Adjointness and other categorical properties}
+\label{section:categorical-properties}
+
+\section{Geometric properties}
+\label{section:geometric-properties}
+
+\section{Counterexamples}
+\label{section:counterexamples}
+
+\nocite{*}
+\printbibliography
+\end{document}
