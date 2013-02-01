@@ -7,8 +7,10 @@
 \usepackage[fleqn, leqno]{amsmath}
 \usepackage{amsthm}
 \usepackage[style = alphabetic, backend = biber, abbreviate = false, dateabbrev = long, alldates = long]{biblatex}
+\usepackage{booktabs}
 \usepackage{fixltx2e}
 \usepackage{mathtools}
+\usepackage{rotating}
 \usepackage{thmtools}
 \usepackage[colorinlistoftodos, textsize = small]{todonotes}
 \usepackage{xcolor}
@@ -29,6 +31,12 @@
 \DeclareDocumentCommand\checkthis{g}{\todo[color=red!50]{Check this\IfNoValueF{#1}{: #1}}}
 \DeclareDocumentCommand\fixthis{g}{\todo[color=orange!50]{Fix this\IfNoValueF{#1}{: #1}}}
 \DeclareDocumentCommand\expandthis{g}{\todo[color=green!50]{Expand\IfNoValueF{#1}{: #1}}}
+
+\newcommand\stackstag[1]{\href{http://stacks.math.columbia.edu/tag/#1}{tag #1}}
+\newcommand\stackstagshort[1]{\href{http://stacks.math.columbia.edu/tag/#1}{#1}}
+\newcommand\stackscite[1]{\textsuperscript{\stackstagshort{#1}}}
+% this is a full citation, too big to my taste
+%\newcommand\stackscite[1]{\cite[\stackstag{#1}]{stacks}}
 
 \newcommand\dash{\nobreakdash-\hspace{0pt}}
 \mathchardef\mhyphen="2D
@@ -82,6 +90,7 @@ In \cref{section:geometric-properties} we will discuss preservation of specific 
 
 \section{Functors}
 \label{section:functors}
+The first two functors are the well-known direct and inverse image, defined in a topological situation.
 \begin{definition}
   Let~$f\colon X\to Y$ be a morphism of topological spaces. The \emph{direct image functor}~$f_*\colon\Sh_X\to\Sh_Y$ is defined by sending~$\mathcal{F}\in\Ob(\Sh_X)$ to the presheaf on~$Y$ defined by
   \begin{equation}
@@ -99,6 +108,18 @@ In \cref{section:geometric-properties} we will discuss preservation of specific 
   \end{equation}
   for~$U\subseteq X$ open.
 \end{definition}
+
+The following functors are ``exceptional'' functors, although the first one is only given to introduce the notation that is used in \cref{table:categorical-properties}.
+\begin{definition}
+  Let~$i\colon Z\hookrightarrow X$ be the inclusion of a closed subspace~$Z$ in a topological space~$X$. The \emph{direct image functor}~$i_*\colon\Sh_Z\to\Sh_X$ is defined by sending~$\mathcal{F}\in\Ob(\Sh_Z)$ to the presheaf on~$X$ defined by
+  \begin{equation}
+    i_*\mathcal{F}\colon U\mapsto\mathcal{F}(i^{-1}(U))=\mathcal{F}(Z\cap U)
+    \label{equation:direct-image-abelian-groups-closed-embedding}
+  \end{equation}
+  for~$U\subseteq X$ open. This presheaf is already a sheaf.
+\end{definition}
+
+\expandthis{describe right adjoint of this functor (hence in our terminology it is \emph{left adjoint to} and we get two adjoints in the table)}
 
 \begin{definition}
   Let~$f\colon X\to Y$ be a morphism of ringed spaces. The \emph{direct image functor}~$f_*\colon\Mod{\mathcal{O}_X}\to\Mod{\mathcal{O}_Y}$ is defined by sending~$\mathcal{F}\in\Ob(\Mod{\mathcal{O}_X})$ to the presheaf defined on~$Y$ by
@@ -119,6 +140,24 @@ In \cref{section:geometric-properties} we will discuss preservation of specific 
 
 \section{Adjointness and other categorical properties}
 \label{section:categorical-properties}
+\begin{sidewaystable}[p]
+  \centering
+  \small
+  \renewcommand*\arraystretch{1.5}
+  \begin{tabular}{cccccl}
+    \toprule
+    & left exact & right exact & left adjoint to & right adjoint to & remarks \\\midrule
+    $f_*\colon\Sh_X\to\Sh_Y$ & yes & & & $f^{-1}$ \\
+    $f^{-1}\colon\Sh_Y\to\Sh_X$ & yes \stackscite{01AJ} & yes & $f_*$ \\
+    $i_*\colon\Sh_Z\to\Sh_X$ & yes \stackscite{01AX} & yes \stackscite{01AX} & $i^!$ & $i^{-1}$ & $i^{-1}$ is nothing but~$f^{-1}$ for~$i=f$ \\
+    $i^!\colon\Sh_X\to\Sh_Z$ & & & & $i_*$ \\
+    $f_*\colon\Mod{\mathcal{O}_X}\to\Mod{\mathcal{O}_Y}$ & yes \stackscite{01AJ} & & & $f^*$ \stackscite{0096} \\
+    $f^*\colon\Mod{\mathcal{O}_Y}\to\Mod{\mathcal{O}_X}$ & & yes \stackscite{01AJ} & $f_*$ \stackscite{0096} & \\
+    \bottomrule
+  \end{tabular}
+  \caption{Categorical properties of functors}
+  \label{table:categorical-properties}
+\end{sidewaystable}
 
 \section{Geometric properties}
 \label{section:geometric-properties}
