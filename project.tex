@@ -122,6 +122,14 @@ The following functors are ``exceptional'' functors, although the first one is o
 \expandthis{describe right adjoint of this functor (hence in our terminology it is \emph{left adjoint to} and we get two adjoints in the table)}
 
 \begin{definition}
+ Let $f \colon X \to Y$ be a morphism of topological spaces. The \emph{direct image with compact support} $f_! \colon \Sh_X \to \Sh_Y$ is defined by sending $\mathcal F \in \Ob(\Sh_Y)$ to the sheafification of
+ \begin{equation}
+   f_! \mathcal F \colon U \mapsto \{s \in \mathcal F(f^{-1}(U)) \mid f |_{\text{supp}(s)} \colon \text{supp}(s) \to Y \text{ is proper} \}
+ \end{equation}
+This presheaf is already a sheaf.\checkthis{Not totally sure in this moment. Also, we should recall what a proper map is?}
+\end{definition}
+
+\begin{definition}
   Let~$f\colon X\to Y$ be a morphism of ringed spaces. The \emph{direct image functor}~$f_*\colon\Mod{\mathcal{O}_X}\to\Mod{\mathcal{O}_Y}$ is defined by sending~$\mathcal{F}\in\Ob(\Mod{\mathcal{O}_X})$ to the presheaf defined on~$Y$ by
   \begin{equation}
     f_*\mathcal{F}\colon U\mapsto\mathcal{F}(f^{-1}(U))
@@ -137,8 +145,37 @@ The following functors are ``exceptional'' functors, although the first one is o
     \label{equation:inverse-image-O_X-modules}
   \end{equation}
 \end{definition}
+\expandthis{Should we recall the definition of tensor product of sheaves?}
+
 
 \section{Adjointness and other categorical properties}
+
+The functors introduced in the previous section satisfy mutual relation. We recall a few general facts:
+
+\begin{lemma}
+Let $f \dashv g \colon \mathcal C \to \mathcal D$ be an adjoint pair between categories. Then $f$ commutes with arbitrary (small) colimits and $g$ commutes with arbitrary (small) limits.
+\end{lemma}
+
+\begin{corollary}
+Let $f \dashv g \colon \mathcal C \to \mathcal D$ be an adjoint pair between \emph{abelian} categories. Then $f$ is right-exact and $g$ is left exact.
+\end{corollary}
+
+We can state the following theorem:
+
+\begin{theorem}
+Let $f \colon X \to Y$ be a morphism of topological spaces. The following relations hold:
+	\begin{enumerate}
+		\item $f^{-1} \dashv f_* \colon \Sh_Y \to \Sh_X$;
+	\end{enumerate}
+\end{theorem}
+
+\begin{theorem}
+Let $f \colon X \to Y$ be a morphism of ringed spaces. The following relation holds:
+	\begin{equation}
+		f^* \dahsv f_*
+	\end{equation}
+\end{theorem}
+
 \label{section:categorical-properties}
 \begin{sidewaystable}[p]
   \centering
