@@ -5,6 +5,7 @@
 \hypersetup{hypertexnames = false, bookmarksdepth = 1, bookmarksopen = true, colorlinks, linkcolor = black, citecolor = black, urlcolor = black, pdfstartview={XYZ null null 1}}
 
 \usepackage[fleqn, leqno]{amsmath}
+\usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage[style = alphabetic, backend = biber, abbreviate = false, dateabbrev = long, alldates = long]{biblatex}
 \usepackage{booktabs}
@@ -27,10 +28,11 @@
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}
 
-\DeclareDocumentCommand\addreference{g}{\todo[color=blue!50]{Add reference\IfNoValueF{#1}{: #1}}}
-\DeclareDocumentCommand\checkthis{g}{\todo[color=red!50]{Check this\IfNoValueF{#1}{: #1}}}
-\DeclareDocumentCommand\fixthis{g}{\todo[color=orange!50]{Fix this\IfNoValueF{#1}{: #1}}}
-\DeclareDocumentCommand\expandthis{g}{\todo[color=green!50]{Expand\IfNoValueF{#1}{: #1}}}
+\newcounter{todocounter}
+\DeclareDocumentCommand\addreference{g}{\stepcounter{todocounter}\todo[color = blue!30, fancyline]{\thetodocounter: Add reference\IfNoValueF{#1}{: #1}}}
+\DeclareDocumentCommand\checkthis{g}{\stepcounter{todocounter}\todo[color = red!50, fancyline]{\thetodocounter: Check this\IfNoValueF{#1}{: #1}}}
+\DeclareDocumentCommand\expandthis{g}{\stepcounter{todocounter}\todo[color = green!50, fancyline]{\thetodocounter: Expand\IfNoValueF{#1}{: #1}}}
+\DeclareDocumentCommand\fixthis{g}{\stepcounter{todocounter}\todo[color = orange!50, fancyline]{\thetodocounter: Fix this\IfNoValueF{#1}{: #1}}}
 
 \newcommand\stackstag[1]{\href{http://stacks.math.columbia.edu/tag/#1}{tag #1}}
 \newcommand\stackstagshort[1]{\href{http://stacks.math.columbia.edu/tag/#1}{#1}}
@@ -67,7 +69,7 @@ Given these associated categories we would like to study their relations under a
 \begin{enumerate}
   \item How can we create meaningful functors between these categories? This is addressed in \cref{section:functors}.
   \item What categorical properties do these functors have? By categorical properties we understand adjointness, preservation of (co)limits, etc. This is addressed in \cref{section:categorical-properties}.
-  \item What ``geometric properties'' do these functors have? By geometric properties we understand mostly properties that are dependent on geometric conditions, and imply certain preservations. This is addressed in \cref{section:geometric-properties}.
+  \item What preservation properties do these functors have? By preservation properties we understand properties that are dependent on geometric conditions, and imply certain preservations of subcategories of the different categories of sheaves. This is addressed in \cref{section:geometric-properties}.
 \end{enumerate}
 Whenever something is \emph{not} true in an interesting way (for our interpretation of interesting), we will provide a counterexample in \cref{section:counterexamples}.
 
@@ -137,7 +139,8 @@ This presheaf is already a sheaf.
 This presheaf is already a sheaf.\addreference{I checked the topological case on Iversen, \emph{Cohomology of sheaves}, Springer Verlag (1986), Proposition VII.1.2, but I don't know how do you want to write the references.}
 \end{definition}
 
-\checkthis{I guess that we should have a relation like $f_! = \varinjlim_Z f_{Z,*}$, where the direct limit is taken over proper sets for the map $f$. This conjectural relation -- I don't have any reference for the moment -- should lead an interesting Grothendieck spectral sequence; in some special case we could even be able to compute the lowest terms!}
+% for some reason this gives an error
+%\checkthis{I guess that we should have a relation like $f_! = \varinjlim_Z f_{Z,*}$, where the direct limit is taken over proper sets for the map $f$. This conjectural relation -- I don't have any reference for the moment -- should lead an interesting Grothendieck spectral sequence; in some special case we could even be able to compute the lowest terms!}
 
 \begin{definition}
   Let~$f\colon X\to Y$ be a morphism of ringed spaces. The \emph{direct image functor}~$f_*\colon\Mod{\mathcal{O}_X}\to\Mod{\mathcal{O}_Y}$ is defined by sending~$\mathcal{F}\in\Ob(\Mod{\mathcal{O}_X})$ to the presheaf defined on~$Y$ by
@@ -159,19 +162,8 @@ This presheaf is already a sheaf.\addreference{I checked the topological case on
 
 
 \section{Adjointness and other categorical properties}
-
-The functors introduced in the previous section satisfy mutual relation. We recall a few general facts:\checkthis{I removed the theorems, but I would leave the two main categorical facts, since they explain without effort the exactness properties.}
-
-\begin{lemma}
-Let $f \dashv g \colon \mathcal C \to \mathcal D$ be an adjoint pair between categories. Then $f$ commutes with arbitrary (small) colimits and $g$ commutes with arbitrary (small) limits.
-\end{lemma}
-
-\begin{corollary}
-Let $f \dashv g \colon \mathcal C \to \mathcal D$ be an adjoint pair between \emph{abelian} categories. Then $f$ is right-exact and $g$ is left exact.
-\end{corollary}
-
-
 \label{section:categorical-properties}
+
 \begin{sidewaystable}[p]
   \centering
   \small
@@ -191,8 +183,23 @@ Let $f \dashv g \colon \mathcal C \to \mathcal D$ be an adjoint pair between \em
   \label{table:categorical-properties}
 \end{sidewaystable}
 
-\section{Geometric properties}
+\section{Preservation properties}
 \label{section:geometric-properties}
+
+\begin{sidewaystable}
+  \centering
+  \small
+  \renewcommand*\arraystretch{1.5}
+  \begin{tabular}{cccccccc}
+    \toprule
+    functor & condition on the morphism & condition on~$X$ & condition on~$Y$ & locally free & coherent & quasicoherent & \\\midrule
+    $f_*$ & proper & & locally noetherian & & yes \stackscite{02OS} \\
+    $f_*$ & quasi-separated quasi-compact & & & & & yes \stackscite{01XJ} \\
+    \bottomrule
+  \end{tabular}
+  \caption{Preservation properties of functors}
+  \label{table:preservation-properties}
+\end{sidewaystable}
 
 \section{Counterexamples}
 \label{section:counterexamples}
